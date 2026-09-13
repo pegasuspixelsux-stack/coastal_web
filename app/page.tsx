@@ -97,7 +97,7 @@ const properties = [
     baths: 7,
     sqft: "8,100",
     image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1200&auto=format&fit=crop",
-    span: "col-span-1 md:col-span-2 row-span-2", // Large feature card
+    span: "col-span-1 md:col-span-2 md:col-start-2 row-span-2 md:row-start-3", // Large feature card, right-aligned on row 2
   },
   {
     id: 5,
@@ -108,7 +108,7 @@ const properties = [
     baths: 3,
     sqft: "3,200",
     image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop",
-    span: "col-span-1 md:col-span-1 row-span-1",
+    span: "col-span-1 md:col-span-1 row-span-1 md:col-start-1 md:row-start-3",
   },
   {
     id: 6,
@@ -119,7 +119,7 @@ const properties = [
     baths: 5,
     sqft: "5,100",
     image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop",
-    span: "col-span-1 md:col-span-1 row-span-1",
+    span: "col-span-1 md:col-span-1 row-span-1 md:col-start-1 md:row-start-4",
   },
 ];
 
@@ -236,8 +236,8 @@ export default function CoastalWebHome() {
       </section>
 
       {/* --- MINI INTRO: HEADING + SUPPORTING TEXT --- */}
-      <section className="py-20 px-6 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+      <section className="py-20 px-6 bg-[#F2F2F7] border-t border-b border-[#000000]/5">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
           <div>
             <h2 className="text-xs uppercase tracking-widest text-[#515154] font-semibold mb-3">Our Philosophy</h2>
             <p className="text-3xl md:text-4xl font-semibold tracking-tight">
