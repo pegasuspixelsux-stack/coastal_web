@@ -7,12 +7,14 @@
 //   adminUsers -> collection(db, 'users')
 
 export type PropertyStatus = "Publicada" | "Borrador";
+export type ListingType = "Venta" | "Alquiler";
 
 export interface Property {
   id: string;
   title: string;
   location: string;
   price: string;
+  listingType: ListingType;
   beds: number;
   baths: number;
   sqm: string;
@@ -50,7 +52,8 @@ export const initialProperties: Property[] = [
     id: "1",
     title: "Villa Horizonte",
     location: "José Ignacio, UY",
-    price: "$14.500.000",
+    price: "US$14.500.000",
+    listingType: "Venta",
     beds: 5,
     baths: 6,
     sqm: "576",
@@ -70,7 +73,8 @@ export const initialProperties: Property[] = [
     id: "2",
     title: "Santuario del Acantilado",
     location: "Manantiales, UY",
-    price: "$9.800.000",
+    price: "US$9.800.000",
+    listingType: "Venta",
     beds: 4,
     baths: 4.5,
     sqm: "418",
@@ -90,7 +94,8 @@ export const initialProperties: Property[] = [
     id: "3",
     title: "Pabellón de Cristal",
     location: "La Barra, UY",
-    price: "$11.200.000",
+    price: "US$11.200.000",
+    listingType: "Venta",
     beds: 3,
     baths: 3.5,
     sqm: "362",
@@ -110,7 +115,8 @@ export const initialProperties: Property[] = [
     id: "4",
     title: "Residencia Océano Azul",
     location: "Punta del Este, UY",
-    price: "$18.500.000",
+    price: "US$18.500.000",
+    listingType: "Venta",
     beds: 6,
     baths: 7,
     sqm: "752",
@@ -130,7 +136,8 @@ export const initialProperties: Property[] = [
     id: "5",
     title: "Casa de las Dunas",
     location: "José Ignacio, UY",
-    price: "$7.400.000",
+    price: "US$7.400.000",
+    listingType: "Venta",
     beds: 3,
     baths: 3,
     sqm: "297",
@@ -150,7 +157,8 @@ export const initialProperties: Property[] = [
     id: "6",
     title: "Horizonte Atlántico",
     location: "La Barra, UY",
-    price: "$12.900.000",
+    price: "US$12.900.000",
+    listingType: "Venta",
     beds: 4,
     baths: 5,
     sqm: "474",

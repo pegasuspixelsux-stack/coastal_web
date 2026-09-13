@@ -83,6 +83,10 @@ export default async function PropertyDetailPage({ params }: PageProps) {
           <h1 className="text-4xl md:text-6xl font-semibold tracking-tight max-w-3xl">
             {property.title}
           </h1>
+          <p className="text-xs uppercase tracking-widest text-white/70 font-semibold mt-4">
+            {property.listingType === 'Venta' ? 'En Venta' : 'En Alquiler'}
+          </p>
+          <p className="text-2xl md:text-3xl font-semibold font-mono">{property.price}</p>
         </div>
       </section>
 
@@ -91,7 +95,9 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         {/* Article: description first */}
         <article className="space-y-8">
           {property.editorialStory.length > 0 && (
-            <p className={`${fraunces.className} italic text-2xl md:text-3xl leading-snug text-[#1D1D1F]`}>
+            <p
+              className={`${fraunces.className} italic text-2xl md:text-3xl leading-snug text-[#1D1D1F] first-letter:text-6xl md:first-letter:text-7xl first-letter:font-semibold first-letter:not-italic first-letter:float-left first-letter:leading-[0.8] first-letter:mr-3 first-letter:mt-1`}
+            >
               {property.editorialStory[0]}
             </p>
           )}
