@@ -80,7 +80,7 @@ export default async function PropertyDetailPage({ params }: PageProps) {
             <MapPin className="w-4 h-4" />
             <span>{property.location}</span>
           </div>
-          <h1 className={`${fraunces.className} italic text-5xl md:text-7xl tracking-tight max-w-3xl`}>
+          <h1 className="text-4xl md:text-6xl font-semibold tracking-tight max-w-3xl">
             {property.title}
           </h1>
         </div>
