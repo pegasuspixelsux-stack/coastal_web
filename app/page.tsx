@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { motion, useInView, useReducedMotion, type Variants } from 'framer-motion';
 import {
   ChevronLeft,
   ChevronRight,
@@ -12,44 +13,128 @@ import {
   Mail,
   Phone,
   Send,
+  Key,
+  ShieldCheck,
+  Users,
 } from 'lucide-react';
+
+// --- SCROLL-REVEAL PRIMITIVES ---
+const fadeInUp: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
+
+const staggerContainer: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
+};
+
+function Reveal({
+  children,
+  className,
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+}) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      variants={shouldReduceMotion ? undefined : fadeInUp}
+      transition={{ duration: 0.6, ease: 'easeOut', delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function RevealGroup({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      variants={shouldReduceMotion ? undefined : staggerContainer}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 // --- HERO SLIDES DATA ---
 const heroSlides = [
   {
     id: 1,
-    title: "The Horizon Villa",
-    location: "Big Sur, California",
-    tagline: "Absolute privacy meets endless Pacific views.",
+    title: "Villa Horizonte",
+    location: "José Ignacio, Uruguay",
+    tagline: "Privacidad absoluta con vistas infinitas al Atlántico.",
     image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop",
   },
   {
     id: 2,
-    title: "Cliffside Sanctuary",
-    location: "Malibu, California",
-    tagline: "Suspended between sky and sea.",
+    title: "Santuario del Acantilado",
+    location: "Manantiales, Uruguay",
+    tagline: "Suspendido entre el cielo y el mar.",
     image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000&auto=format&fit=crop",
   },
   {
     id: 3,
-    title: "The Glass Pavilion",
-    location: "Carmel-by-the-Sea",
-    tagline: "Seamless architectural integration with nature.",
+    title: "Pabellón de Cristal",
+    location: "La Barra, Uruguay",
+    tagline: "Integración arquitectónica perfecta con la naturaleza.",
     image: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=2000&auto=format&fit=crop",
   },
   {
     id: 4,
-    title: "Ocean Blue Estate",
-    location: "Laguna Beach, California",
-    tagline: "Timeless luxury on the water's edge.",
+    title: "Residencia Océano Azul",
+    location: "Punta del Este, Uruguay",
+    tagline: "Lujo atemporal al borde del agua.",
     image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2000&auto=format&fit=crop",
   },
   {
     id: 5,
-    title: "The Dune House",
-    location: "Monterey, California",
-    tagline: "Minimalist living shaped by coastal winds.",
+    title: "Casa de las Dunas",
+    location: "José Ignacio, Uruguay",
+    tagline: "Vida minimalista moldeada por los vientos de la costa.",
     image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2000&auto=format&fit=crop",
+  },
+];
+
+// --- OUR SERVICES (Nosotros section) ---
+const services = [
+  {
+    icon: Key,
+    title: "Adquisición de Propiedades",
+    description: "Acceso off-market a residencias de gran valor arquitectónico a lo largo de la costa atlántica.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Asesoría Privada",
+    description: "Acompañamiento discreto y de punta a punta en tasación, negociación y cierre.",
+  },
+  {
+    icon: Users,
+    title: "Servicios de Concierge",
+    description: "Soporte dedicado para mudanza, puesta en valor y administración continua de la propiedad.",
   },
 ];
 
@@ -57,69 +142,69 @@ const heroSlides = [
 const properties = [
   {
     id: 1,
-    title: "The Horizon Villa",
-    location: "Big Sur, CA",
-    price: "$14,500,000",
+    title: "Villa Horizonte",
+    location: "José Ignacio, UY",
+    price: "$14.500.000",
     beds: 5,
     baths: 6,
-    sqft: "6,200",
+    sqm: "576",
     image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop",
     span: "col-span-1 md:col-span-2 row-span-2", // Large feature card
   },
   {
     id: 2,
-    title: "Cliffside Sanctuary",
-    location: "Malibu, CA",
-    price: "$9,800,000",
+    title: "Santuario del Acantilado",
+    location: "Manantiales, UY",
+    price: "$9.800.000",
     beds: 4,
     baths: 4.5,
-    sqft: "4,500",
+    sqm: "418",
     image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop",
     span: "col-span-1 md:col-span-1 row-span-1",
   },
   {
     id: 3,
-    title: "The Glass Pavilion",
-    location: "Carmel, CA",
-    price: "$11,200,000",
+    title: "Pabellón de Cristal",
+    location: "La Barra, UY",
+    price: "$11.200.000",
     beds: 3,
     baths: 3.5,
-    sqft: "3,900",
+    sqm: "362",
     image: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=800&auto=format&fit=crop",
     span: "col-span-1 md:col-span-1 row-span-1",
   },
   {
     id: 4,
-    title: "Ocean Blue Estate",
-    location: "Laguna Beach, CA",
-    price: "$18,500,000",
+    title: "Residencia Océano Azul",
+    location: "Punta del Este, UY",
+    price: "$18.500.000",
     beds: 6,
     baths: 7,
-    sqft: "8,100",
+    sqm: "752",
     image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1200&auto=format&fit=crop",
-    span: "col-span-1 md:col-span-2 row-span-2", // Large feature card
+    span: "col-span-1 md:col-span-2 md:col-start-2 row-span-2 md:row-start-3", // Large feature card, right-aligned on row 2
   },
   {
     id: 5,
-    title: "The Dune House",
-    location: "Monterey, CA",
-    price: "$7,400,000",
+    title: "Casa de las Dunas",
+    location: "José Ignacio, UY",
+    price: "$7.400.000",
     beds: 3,
     baths: 3,
-    sqft: "3,200",
+    sqm: "297",
     image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop",
-    span: "col-span-1 md:col-span-1 row-span-1",
+    span: "col-span-1 md:col-span-1 row-span-1 md:col-start-1 md:row-start-3",
   },
   {
     id: 6,
-    title: "Pacific Horizon",
-    location: "Pebble Beach, CA",
-    price: "$12,900,000",
+    title: "Horizonte Atlántico",
+    location: "La Barra, UY",
+    price: "$12.900.000",
     beds: 4,
     baths: 5,
-    sqft: "5,100",
+    sqm: "474",
     image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop",
-    span: "col-span-1 md:col-span-1 row-span-1",
+    span: "col-span-1 md:col-span-1 row-span-1 md:col-start-1 md:row-start-4",
   },
 ];
 
@@ -145,15 +230,15 @@ export default function CoastalWebHome() {
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <span className="font-semibold text-lg tracking-tight">Coastal.</span>
           <nav className="hidden md:flex items-center space-x-8 text-sm text-[#515154]">
-            <a href="#properties" className="hover:text-[#1D1D1F] transition-colors">Properties</a>
-            <a href="#vision" className="hover:text-[#1D1D1F] transition-colors">Vision</a>
-            <a href="#contact" className="hover:text-[#1D1D1F] transition-colors">Inquire</a>
+            <a href="#properties" className="hover:text-[#1D1D1F] transition-colors">Propiedades</a>
+            <a href="#vision" className="hover:text-[#1D1D1F] transition-colors">Nosotros</a>
+            <a href="#contact" className="hover:text-[#1D1D1F] transition-colors">Contacto</a>
           </nav>
           <a
             href="#contact"
-            className="bg-[#1D1D1F] text-[#FFFFFF] text-xs font-medium px-4 py-2 rounded-full hover:bg-[#333336] transition-all"
+            className="bg-[#1D1D1F] text-[#FFFFFF] text-xs font-medium px-4 py-2 rounded-none hover:bg-[#333336] transition-all"
           >
-            Private Tour
+            Tour Privado
           </a>
         </div>
       </header>
@@ -194,9 +279,9 @@ export default function CoastalWebHome() {
                 <div className="flex items-center space-x-4">
                   <a
                     href="#contact"
-                    className="inline-flex items-center space-x-2 bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-white/90 transition-all"
+                    className="inline-flex items-center space-x-2 bg-white text-black px-6 py-3 rounded-none text-sm font-medium hover:bg-white/90 transition-all"
                   >
-                    <span>Request Details</span>
+                    <span>Solicitar Detalles</span>
                     <ArrowUpRight className="w-4 h-4" />
                   </a>
                 </div>
@@ -212,15 +297,15 @@ export default function CoastalWebHome() {
           </div>
           <button
             onClick={prevSlide}
-            aria-label="Previous slide"
-            className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-all"
+            aria-label="Diapositiva anterior"
+            className="w-10 h-10 rounded-none bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-all"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={nextSlide}
-            aria-label="Next slide"
-            className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-all"
+            aria-label="Diapositiva siguiente"
+            className="w-10 h-10 rounded-none bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-all"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
@@ -235,18 +320,34 @@ export default function CoastalWebHome() {
         </div>
       </section>
 
+      {/* --- MINI INTRO: HEADING + SUPPORTING TEXT --- */}
+      <section className="py-20 px-6 bg-[#F2F2F7] border-t border-b border-[#000000]/5">
+        <RevealGroup className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+          <motion.div variants={fadeInUp}>
+            <h2 className="text-xs uppercase tracking-widest text-[#515154] font-semibold mb-3">Nuestra Filosofía</h2>
+            <p className="text-3xl md:text-4xl font-semibold tracking-tight">
+              Vida costera, diseño sin concesiones.
+            </p>
+          </motion.div>
+          <motion.p variants={fadeInUp} className="text-[#515154] font-light leading-relaxed">
+            Cada residencia de nuestro portafolio es seleccionada por su integridad arquitectónica y su relación con la costa atlántica. Trabajamos exclusivamente con propietarios y compradores que valoran la privacidad, la artesanía y el diseño perdurable por sobre las tendencias pasajeras.
+          </motion.p>
+        </RevealGroup>
+      </section>
+
       {/* --- BODY: PROPERTY BENTO GRID --- */}
       <section id="properties" className="py-28 px-6 max-w-7xl mx-auto">
-        <div className="text-center max-w-xl mx-auto mb-20">
-          <h2 className="text-xs uppercase tracking-widest text-[#515154] font-semibold mb-3">Portfolio</h2>
-          <p className="text-3xl md:text-4xl font-semibold tracking-tight">Curated Coastal Residences</p>
-        </div>
+        <Reveal className="text-center max-w-xl mx-auto mb-20">
+          <h2 className="text-xs uppercase tracking-widest text-[#515154] font-semibold mb-3">Portafolio</h2>
+          <p className="text-3xl md:text-4xl font-semibold tracking-tight">Residencias Costeras Curadas</p>
+        </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[380px]">
+        <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[380px]">
           {properties.map((prop) => (
-            <div
+            <motion.div
               key={prop.id}
-              className={`group relative rounded-3xl overflow-hidden bg-[#E5E5EA] ${prop.span} flex flex-col justify-end p-8 transition-transform duration-500 hover:-translate-y-1`}
+              variants={fadeInUp}
+              className={`group relative rounded-none overflow-hidden bg-[#E5E5EA] ${prop.span} flex flex-col justify-end p-8 transition-transform duration-500 hover:-translate-y-1`}
             >
               {/* Background Image */}
               <div
@@ -258,10 +359,10 @@ export default function CoastalWebHome() {
 
               {/* Top Details (Price Badge) */}
               <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-10">
-                <span className="bg-white/90 backdrop-blur-md text-black text-xs font-semibold px-3.5 py-1.5 rounded-full shadow-sm">
+                <span className="bg-white/90 backdrop-blur-md text-black text-xs font-semibold px-3.5 py-1.5 rounded-none shadow-sm">
                   {prop.price}
                 </span>
-                <span className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+                <span className="w-9 h-9 rounded-none bg-white/20 backdrop-blur-md border border-white/30 text-white flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
                   <ArrowUpRight className="w-4 h-4" />
                 </span>
               </div>
@@ -275,20 +376,57 @@ export default function CoastalWebHome() {
                 <div className="flex items-center space-x-6 pt-4 border-t border-white/20 text-xs text-white/80 font-medium">
                   <div className="flex items-center space-x-1.5">
                     <Bed className="w-4 h-4" />
-                    <span>{prop.beds} Beds</span>
+                    <span>{prop.beds} Dorm.</span>
                   </div>
                   <div className="flex items-center space-x-1.5">
                     <Bath className="w-4 h-4" />
-                    <span>{prop.baths} Baths</span>
+                    <span>{prop.baths} Baños</span>
                   </div>
                   <div className="flex items-center space-x-1.5">
                     <Maximize className="w-4 h-4" />
-                    <span>{prop.sqft} sqft</span>
+                    <span>{prop.sqm} m²</span>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
+        </RevealGroup>
+      </section>
+
+      {/* --- NOSOTROS: ABOUT + SERVICES --- */}
+      <section id="vision" className="py-28 px-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
+          {/* Left Column: Heading & Text */}
+          <Reveal>
+            <h2 className="text-xs uppercase tracking-widest text-[#515154] font-semibold mb-3">Nosotros</h2>
+            <p className="text-3xl md:text-5xl font-semibold tracking-tight mb-6">
+              Tres décadas de experiencia costera, un enfoque singular.
+            </p>
+            <p className="text-[#515154] font-light leading-relaxed">
+              Coastal Web nació de la convicción de que una arquitectura excepcional merece un proceso de adquisición igualmente excepcional. Nuestros asesores aportan décadas de experiencia combinada en bienes raíces de lujo, representando un portafolio selecto de las residencias más distinguidas de la costa atlántica.
+            </p>
+          </Reveal>
+
+          {/* Right Column: Services (3 stacked boxes) */}
+          <RevealGroup className="space-y-4">
+            {services.map((service) => (
+              <motion.div
+                key={service.title}
+                variants={fadeInUp}
+                className="flex items-start space-x-5 border border-[#000000]/10 bg-white p-6"
+              >
+                <div className="w-12 h-12 shrink-0 bg-[#1D1D1F] text-white flex items-center justify-center">
+                  <service.icon className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold tracking-tight mb-1">{service.title}</h3>
+                  <p className="text-sm text-[#515154] font-light leading-relaxed">{service.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </RevealGroup>
+
         </div>
       </section>
 
@@ -297,129 +435,129 @@ export default function CoastalWebHome() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
           {/* Left Column: Company Data & Value Prop */}
-          <div>
-            <h2 className="text-xs uppercase tracking-widest text-[#515154] font-semibold mb-3">Private Acquisition</h2>
+          <Reveal>
+            <h2 className="text-xs uppercase tracking-widest text-[#515154] font-semibold mb-3">Adquisición Privada</h2>
             <p className="text-3xl md:text-5xl font-semibold tracking-tight mb-6">
-              Begin your journey to exceptional coastal living.
+              Comenzá tu camino hacia una vida costera excepcional.
             </p>
             <p className="text-[#515154] font-light leading-relaxed mb-12">
-              Our advisors operate with absolute discretion, representing premier architectural landmarks along the Pacific coastline. Connect with us to schedule a private viewing or list a distinguished property.
+              Nuestros asesores operan con absoluta discreción, representando hitos arquitectónicos de primer nivel a lo largo de la costa atlántica. Contactanos para coordinar una visita privada o publicar una propiedad distinguida.
             </p>
 
             <div className="space-y-6 pt-6 border-t border-[#000000]/10">
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-[#1D1D1F]">
+                <div className="w-10 h-10 rounded-none bg-white flex items-center justify-center shadow-sm text-[#1D1D1F]">
                   <MapPin className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="text-xs text-[#515154] uppercase tracking-wider font-semibold">Headquarters</p>
-                  <p className="text-sm font-medium">101 Ocean Avenue, Carmel-by-the-Sea, CA</p>
+                  <p className="text-xs text-[#515154] uppercase tracking-wider font-semibold">Casa Central</p>
+                  <p className="text-sm font-medium">Av. Roosevelt, Parada 8, Punta del Este, Uruguay</p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-[#1D1D1F]">
+                <div className="w-10 h-10 rounded-none bg-white flex items-center justify-center shadow-sm text-[#1D1D1F]">
                   <Mail className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="text-xs text-[#515154] uppercase tracking-wider font-semibold">Direct Inquiry</p>
-                  <p className="text-sm font-medium">concierge@coastalweb.estate</p>
+                  <p className="text-xs text-[#515154] uppercase tracking-wider font-semibold">Consulta Directa</p>
+                  <p className="text-sm font-medium">concierge@coastalweb.com.uy</p>
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-[#1D1D1F]">
+                <div className="w-10 h-10 rounded-none bg-white flex items-center justify-center shadow-sm text-[#1D1D1F]">
                   <Phone className="w-4 h-4" />
                 </div>
                 <div>
-                  <p className="text-xs text-[#515154] uppercase tracking-wider font-semibold">Telephone</p>
-                  <p className="text-sm font-medium">+1 (831) 555-0199</p>
+                  <p className="text-xs text-[#515154] uppercase tracking-wider font-semibold">Teléfono</p>
+                  <p className="text-sm font-medium">+598 4244 0199</p>
                 </div>
               </div>
             </div>
-          </div>
+          </Reveal>
 
           {/* Right Column: Minimalist Contact Form */}
-          <div className="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-[#000000]/5">
+          <Reveal delay={0.15} className="bg-white p-8 md:p-10 rounded-none shadow-sm border border-[#000000]/5">
             <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
               <div>
-                <label className="block text-xs uppercase tracking-wider font-semibold text-[#515154] mb-2">Full Name</label>
+                <label className="block text-xs uppercase tracking-wider font-semibold text-[#515154] mb-2">Nombre Completo</label>
                 <input
                   type="text"
-                  placeholder="Jonathan Vance"
-                  className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors"
+                  placeholder="Martín Rodríguez"
+                  className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-none px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors"
                 />
               </div>
               <div>
-                <label className="block text-xs uppercase tracking-wider font-semibold text-[#515154] mb-2">Email Address</label>
+                <label className="block text-xs uppercase tracking-wider font-semibold text-[#515154] mb-2">Correo Electrónico</label>
                 <input
                   type="email"
-                  placeholder="jonathan@vance.com"
-                  className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors"
+                  placeholder="martin@rodriguez.com"
+                  className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-none px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors"
                 />
               </div>
               <div>
-                <label className="block text-xs uppercase tracking-wider font-semibold text-[#515154] mb-2">Property of Interest</label>
+                <label className="block text-xs uppercase tracking-wider font-semibold text-[#515154] mb-2">Propiedad de Interés</label>
                 <select
-                  className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors text-[#1D1D1F]"
+                  className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-none px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors text-[#1D1D1F]"
                 >
-                  <option>The Horizon Villa, Big Sur</option>
-                  <option>Cliffside Sanctuary, Malibu</option>
-                  <option>The Glass Pavilion, Carmel</option>
-                  <option>Ocean Blue Estate, Laguna Beach</option>
-                  <option>General Representation</option>
+                  <option>Villa Horizonte, José Ignacio</option>
+                  <option>Santuario del Acantilado, Manantiales</option>
+                  <option>Pabellón de Cristal, La Barra</option>
+                  <option>Residencia Océano Azul, Punta del Este</option>
+                  <option>Representación General</option>
                 </select>
               </div>
               <div>
-                <label className="block text-xs uppercase tracking-wider font-semibold text-[#515154] mb-2">Message</label>
+                <label className="block text-xs uppercase tracking-wider font-semibold text-[#515154] mb-2">Mensaje</label>
                 <textarea
                   rows={4}
-                  placeholder="Share your timeline or specific requirements..."
-                  className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors resize-none"
+                  placeholder="Contanos tus tiempos o requerimientos específicos..."
+                  className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-none px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors resize-none"
                 />
               </div>
               <button
                 type="submit"
-                className="w-full bg-[#1D1D1F] text-white py-3.5 rounded-xl text-sm font-medium hover:bg-[#333336] transition-all flex items-center justify-center space-x-2 shadow-sm"
+                className="w-full bg-[#1D1D1F] text-white py-3.5 rounded-none text-sm font-medium hover:bg-[#333336] transition-all flex items-center justify-center space-x-2 shadow-sm"
               >
-                <span>Submit Inquiry</span>
+                <span>Enviar Consulta</span>
                 <Send className="w-4 h-4" />
               </button>
             </form>
-          </div>
+          </Reveal>
 
         </div>
       </section>
 
       {/* --- FOUR-COLUMN FOOTER --- */}
-      <footer className="bg-[#1D1D1F] text-[#FBFBFD] py-20 px-6">
+      <footer className="bg-[#000000] text-[#FBFBFD] py-20 px-6">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
 
           {/* Column 1: Brand */}
           <div className="space-y-4">
             <span className="text-lg font-semibold tracking-tight text-white">Coastal.</span>
             <p className="text-xs text-white/60 leading-relaxed font-light">
-              Redefining architectural property acquisition along the Pacific Coast with absolute precision and elegance.
+              Redefiniendo la adquisición de propiedades arquitectónicas a lo largo de la costa atlántica con absoluta precisión y elegancia.
             </p>
           </div>
 
           {/* Column 2: Portfolio */}
           <div className="space-y-4">
-            <p className="text-xs uppercase tracking-widest text-white/40 font-semibold">Portfolio</p>
+            <p className="text-xs uppercase tracking-widest text-white/40 font-semibold">Portafolio</p>
             <ul className="space-y-2.5 text-xs text-white/80 font-light">
-              <li><a href="#properties" className="hover:text-white transition-colors">Big Sur Residences</a></li>
-              <li><a href="#properties" className="hover:text-white transition-colors">Malibu Estates</a></li>
-              <li><a href="#properties" className="hover:text-white transition-colors">Carmel Architecture</a></li>
-              <li><a href="#properties" className="hover:text-white transition-colors">Laguna Beachfront</a></li>
+              <li><a href="#properties" className="hover:text-white transition-colors">Residencias en José Ignacio</a></li>
+              <li><a href="#properties" className="hover:text-white transition-colors">Propiedades en Manantiales</a></li>
+              <li><a href="#properties" className="hover:text-white transition-colors">Arquitectura en La Barra</a></li>
+              <li><a href="#properties" className="hover:text-white transition-colors">Frente al Mar en Punta del Este</a></li>
             </ul>
           </div>
 
           {/* Column 3: Company */}
           <div className="space-y-4">
-            <p className="text-xs uppercase tracking-widest text-white/40 font-semibold">Company</p>
+            <p className="text-xs uppercase tracking-widest text-white/40 font-semibold">Empresa</p>
             <ul className="space-y-2.5 text-xs text-white/80 font-light">
-              <li><a href="#vision" className="hover:text-white transition-colors">Our Vision</a></li>
-              <li><a href="#contact" className="hover:text-white transition-colors">Advisory Board</a></li>
-              <li><a href="#contact" className="hover:text-white transition-colors">Press & Awards</a></li>
-              <li><a href="#contact" className="hover:text-white transition-colors">Careers</a></li>
+              <li><a href="#vision" className="hover:text-white transition-colors">Nuestra Visión</a></li>
+              <li><a href="#contact" className="hover:text-white transition-colors">Consejo Asesor</a></li>
+              <li><a href="#contact" className="hover:text-white transition-colors">Prensa y Premios</a></li>
+              <li><a href="#contact" className="hover:text-white transition-colors">Carreras</a></li>
             </ul>
           </div>
 
@@ -427,9 +565,9 @@ export default function CoastalWebHome() {
           <div className="space-y-4">
             <p className="text-xs uppercase tracking-widest text-white/40 font-semibold">Legal</p>
             <ul className="space-y-2.5 text-xs text-white/80 font-light">
-              <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Brokerage License #0291918</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Política de Privacidad</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Términos de Servicio</a></li>
+              <li><a href="#" className="hover:text-white transition-colors">Matrícula de Corredor N.º 0291918</a></li>
             </ul>
           </div>
 
@@ -437,8 +575,8 @@ export default function CoastalWebHome() {
 
         {/* Bottom Bar */}
         <div className="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-xs text-white/40 font-light">
-          <p>&copy; {new Date().getFullYear()} Coastal Web Estate Inc. All rights reserved.</p>
-          <p className="mt-4 md:mt-0">Designed with Apple-level attention to detail.</p>
+          <p>&copy; {new Date().getFullYear()} Coastal Web Estate Inc. Todos los derechos reservados.</p>
+          <p className="mt-4 md:mt-0">Diseñado con una atención al detalle de nivel Apple.</p>
         </div>
       </footer>
 
