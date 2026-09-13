@@ -151,7 +151,7 @@ export default function CoastalWebHome() {
           </nav>
           <a
             href="#contact"
-            className="bg-[#1D1D1F] text-[#FFFFFF] text-xs font-medium px-4 py-2 rounded-full hover:bg-[#333336] transition-all"
+            className="bg-[#1D1D1F] text-[#FFFFFF] text-xs font-medium px-4 py-2 rounded-none hover:bg-[#333336] transition-all"
           >
             Private Tour
           </a>
@@ -194,7 +194,7 @@ export default function CoastalWebHome() {
                 <div className="flex items-center space-x-4">
                   <a
                     href="#contact"
-                    className="inline-flex items-center space-x-2 bg-white text-black px-6 py-3 rounded-full text-sm font-medium hover:bg-white/90 transition-all"
+                    className="inline-flex items-center space-x-2 bg-white text-black px-6 py-3 rounded-none text-sm font-medium hover:bg-white/90 transition-all"
                   >
                     <span>Request Details</span>
                     <ArrowUpRight className="w-4 h-4" />
@@ -213,14 +213,14 @@ export default function CoastalWebHome() {
           <button
             onClick={prevSlide}
             aria-label="Previous slide"
-            className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-all"
+            className="w-10 h-10 rounded-none bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-all"
           >
             <ChevronLeft className="w-5 h-5" />
           </button>
           <button
             onClick={nextSlide}
             aria-label="Next slide"
-            className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-all"
+            className="w-10 h-10 rounded-none bg-white/10 backdrop-blur-md border border-white/20 text-white flex items-center justify-center hover:bg-white/20 transition-all"
           >
             <ChevronRight className="w-5 h-5" />
           </button>
@@ -235,6 +235,21 @@ export default function CoastalWebHome() {
         </div>
       </section>
 
+      {/* --- MINI INTRO: HEADING + SUPPORTING TEXT --- */}
+      <section className="py-20 px-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+          <div>
+            <h2 className="text-xs uppercase tracking-widest text-[#515154] font-semibold mb-3">Our Philosophy</h2>
+            <p className="text-3xl md:text-4xl font-semibold tracking-tight">
+              Coastal living, uncompromising design.
+            </p>
+          </div>
+          <p className="text-[#515154] font-light leading-relaxed">
+            Every residence in our portfolio is selected for its architectural integrity and its relationship to the Pacific coastline. We work exclusively with owners and buyers who value privacy, craftsmanship, and enduring design over fleeting trends.
+          </p>
+        </div>
+      </section>
+
       {/* --- BODY: PROPERTY BENTO GRID --- */}
       <section id="properties" className="py-28 px-6 max-w-7xl mx-auto">
         <div className="text-center max-w-xl mx-auto mb-20">
@@ -246,7 +261,7 @@ export default function CoastalWebHome() {
           {properties.map((prop) => (
             <div
               key={prop.id}
-              className={`group relative rounded-3xl overflow-hidden bg-[#E5E5EA] ${prop.span} flex flex-col justify-end p-8 transition-transform duration-500 hover:-translate-y-1`}
+              className={`group relative rounded-none overflow-hidden bg-[#E5E5EA] ${prop.span} flex flex-col justify-end p-8 transition-transform duration-500 hover:-translate-y-1`}
             >
               {/* Background Image */}
               <div
@@ -258,10 +273,10 @@ export default function CoastalWebHome() {
 
               {/* Top Details (Price Badge) */}
               <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-10">
-                <span className="bg-white/90 backdrop-blur-md text-black text-xs font-semibold px-3.5 py-1.5 rounded-full shadow-sm">
+                <span className="bg-white/90 backdrop-blur-md text-black text-xs font-semibold px-3.5 py-1.5 rounded-none shadow-sm">
                   {prop.price}
                 </span>
-                <span className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
+                <span className="w-9 h-9 rounded-none bg-white/20 backdrop-blur-md border border-white/30 text-white flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all">
                   <ArrowUpRight className="w-4 h-4" />
                 </span>
               </div>
@@ -308,7 +323,7 @@ export default function CoastalWebHome() {
 
             <div className="space-y-6 pt-6 border-t border-[#000000]/10">
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-[#1D1D1F]">
+                <div className="w-10 h-10 rounded-none bg-white flex items-center justify-center shadow-sm text-[#1D1D1F]">
                   <MapPin className="w-4 h-4" />
                 </div>
                 <div>
@@ -317,7 +332,7 @@ export default function CoastalWebHome() {
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-[#1D1D1F]">
+                <div className="w-10 h-10 rounded-none bg-white flex items-center justify-center shadow-sm text-[#1D1D1F]">
                   <Mail className="w-4 h-4" />
                 </div>
                 <div>
@@ -326,7 +341,7 @@ export default function CoastalWebHome() {
                 </div>
               </div>
               <div className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm text-[#1D1D1F]">
+                <div className="w-10 h-10 rounded-none bg-white flex items-center justify-center shadow-sm text-[#1D1D1F]">
                   <Phone className="w-4 h-4" />
                 </div>
                 <div>
@@ -338,14 +353,14 @@ export default function CoastalWebHome() {
           </div>
 
           {/* Right Column: Minimalist Contact Form */}
-          <div className="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-[#000000]/5">
+          <div className="bg-white p-8 md:p-10 rounded-none shadow-sm border border-[#000000]/5">
             <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
               <div>
                 <label className="block text-xs uppercase tracking-wider font-semibold text-[#515154] mb-2">Full Name</label>
                 <input
                   type="text"
                   placeholder="Jonathan Vance"
-                  className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors"
+                  className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-none px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors"
                 />
               </div>
               <div>
@@ -353,13 +368,13 @@ export default function CoastalWebHome() {
                 <input
                   type="email"
                   placeholder="jonathan@vance.com"
-                  className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors"
+                  className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-none px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors"
                 />
               </div>
               <div>
                 <label className="block text-xs uppercase tracking-wider font-semibold text-[#515154] mb-2">Property of Interest</label>
                 <select
-                  className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors text-[#1D1D1F]"
+                  className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-none px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors text-[#1D1D1F]"
                 >
                   <option>The Horizon Villa, Big Sur</option>
                   <option>Cliffside Sanctuary, Malibu</option>
@@ -373,12 +388,12 @@ export default function CoastalWebHome() {
                 <textarea
                   rows={4}
                   placeholder="Share your timeline or specific requirements..."
-                  className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors resize-none"
+                  className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-none px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors resize-none"
                 />
               </div>
               <button
                 type="submit"
-                className="w-full bg-[#1D1D1F] text-white py-3.5 rounded-xl text-sm font-medium hover:bg-[#333336] transition-all flex items-center justify-center space-x-2 shadow-sm"
+                className="w-full bg-[#1D1D1F] text-white py-3.5 rounded-none text-sm font-medium hover:bg-[#333336] transition-all flex items-center justify-center space-x-2 shadow-sm"
               >
                 <span>Submit Inquiry</span>
                 <Send className="w-4 h-4" />
