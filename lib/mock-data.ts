@@ -17,6 +17,8 @@ export interface Property {
   baths: number;
   sqm: string;
   image: string;
+  images: string[];
+  editorialStory: string[];
   status: PropertyStatus;
 }
 
@@ -52,7 +54,16 @@ export const initialProperties: Property[] = [
     beds: 5,
     baths: 6,
     sqm: "576",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2000&auto=format&fit=crop",
+    ],
+    editorialStory: [
+      "Asentada sobre las dunas de José Ignacio, Villa Horizonte es un ejercicio de contención arquitectónica: cada decisión espacial busca disolver el límite entre el interior habitado y la costa atlántica sin domesticar. Los volúmenes de madera y hormigón se recortan contra el cielo del atardecer como una silueta más del paisaje.",
+      "Los ventanales de piso a techo enmarcan un horizonte ininterrumpido, mientras que los materiales — madera reciclada, piedra local, acero patinado — envejecen junto con el entorno en lugar de resistirlo. Es una casa pensada para quienes entienden que el verdadero lujo, en esta costa, es el silencio.",
+    ],
     status: "Publicada",
   },
   {
@@ -63,7 +74,16 @@ export const initialProperties: Property[] = [
     beds: 4,
     baths: 4.5,
     sqm: "418",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=2000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop",
+    ],
+    editorialStory: [
+      "Suspendida sobre la línea donde las olas de Manantiales rompen contra la barranca, esta residencia responde al oleaje constante con una calma deliberada. La estructura, elevada sobre pilotes de hormigón visto, deja que el viento y la vegetación nativa circulen por debajo sin interrupciones.",
+      "Adentro, una paleta de materiales fríos — cemento alisado, vidrio, metal negro — contrasta con la calidez de la luz que entra desde el amanecer hasta el atardecer. Es un refugio pensado para quienes buscan estar cerca del mar sin ceder terreno al ruido de la temporada alta.",
+    ],
     status: "Publicada",
   },
   {
@@ -74,7 +94,16 @@ export const initialProperties: Property[] = [
     beds: 3,
     baths: 3.5,
     sqm: "362",
-    image: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=2000&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=2000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000&auto=format&fit=crop",
+    ],
+    editorialStory: [
+      "A pasos del puente que define a La Barra, el Pabellón de Cristal lleva la lógica del diseño arquitectónico de la zona a su expresión más pura: superficies acristaladas, líneas rectas y una estructura que parece flotar sobre el paisaje sin imponerse sobre él.",
+      "De noche, la casa se convierte en una linterna entre los pinares; de día, se retira detrás de los reflejos del cielo y el monte. Fue concebida para quienes valoran el diseño tanto como la ubicación — una pieza tan interesante desde adentro como desde la ruta.",
+    ],
     status: "Publicada",
   },
   {
@@ -85,7 +114,16 @@ export const initialProperties: Property[] = [
     beds: 6,
     baths: 7,
     sqm: "752",
-    image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2000&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2000&auto=format&fit=crop",
+    ],
+    editorialStory: [
+      "En el corazón de Punta del Este, la Residencia Océano Azul reinterpreta el lujo balneario clásico con una escala contemporánea: siete ambientes distribuidos alrededor de una piscina a nivel del horizonte, y una fachada que capta la última luz del día desde cada habitación principal.",
+      "Es una casa construida para recibir — con espacios de estar que se despliegan hacia el exterior y una cocina pensada para las cenas largas de enero. Su ubicación, a minutos de la Rambla, la vuelve tan práctica como espectacular.",
+    ],
     status: "Publicada",
   },
   {
@@ -96,7 +134,16 @@ export const initialProperties: Property[] = [
     beds: 3,
     baths: 3,
     sqm: "297",
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2000&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=2000&auto=format&fit=crop",
+    ],
+    editorialStory: [
+      "Moldeada por los vientos que barren las dunas de José Ignacio, esta casa minimalista reduce el programa a lo esencial: tres dormitorios, líneas bajas y una orientación estudiada para resguardarse del viento sur sin perder la vista al mar.",
+      "Los materiales — madera clara, cal, piedra — envejecen con el sol y la sal como parte del diseño, no a pesar de él. Una propuesta honesta para quienes buscan una segunda residencia sin ostentación, pero sin concesiones en el detalle.",
+    ],
     status: "Borrador",
   },
   {
@@ -107,7 +154,16 @@ export const initialProperties: Property[] = [
     beds: 4,
     baths: 5,
     sqm: "474",
-    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2000&auto=format&fit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=2000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=2000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2000&auto=format&fit=crop",
+    ],
+    editorialStory: [
+      "Horizonte Atlántico ocupa un terreno elevado de La Barra, con una piscina infinita que parece continuarse en el propio océano. Su planta se organiza en dos niveles conectados por una escalera de piedra que actúa casi como una escultura central de la casa.",
+      "Diseñada para las estadías largas, la casa privilegia los espacios de transición — galerías, terrazas, deck — por sobre los ambientes cerrados, apostando a que la vida transcurra, sobre todo, afuera.",
+    ],
     status: "Publicada",
   },
 ];
