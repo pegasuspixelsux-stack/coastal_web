@@ -350,6 +350,12 @@ export default function CoastalWebHome() {
               variants={fadeInUp}
               className={`group relative rounded-none overflow-hidden bg-[#E5E5EA] ${prop.span} flex flex-col justify-end p-8 transition-transform duration-500 hover:-translate-y-1`}
             >
+              <Link
+                href={`/properties/${prop.id}`}
+                className="absolute inset-0 z-20"
+                aria-label={`Ver ${prop.title}`}
+              />
+
               {/* Background Image */}
               <div
                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
