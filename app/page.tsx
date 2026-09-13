@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { motion, useInView, useReducedMotion, type Variants } from 'framer-motion';
 import {
   ChevronLeft,
   ChevronRight,
@@ -16,6 +17,68 @@ import {
   ShieldCheck,
   Users,
 } from 'lucide-react';
+
+// --- SCROLL-REVEAL PRIMITIVES ---
+const fadeInUp: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
+
+const staggerContainer: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
+};
+
+function Reveal({
+  children,
+  className,
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+}) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      variants={shouldReduceMotion ? undefined : fadeInUp}
+      transition={{ duration: 0.6, ease: 'easeOut', delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function RevealGroup({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const shouldReduceMotion = useReducedMotion();
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      variants={shouldReduceMotion ? undefined : staggerContainer}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 // --- HERO SLIDES DATA ---
 const heroSlides = [
@@ -259,30 +322,31 @@ export default function CoastalWebHome() {
 
       {/* --- MINI INTRO: HEADING + SUPPORTING TEXT --- */}
       <section className="py-20 px-6 bg-[#F2F2F7] border-t border-b border-[#000000]/5">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
-          <div>
+        <RevealGroup className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-center">
+          <motion.div variants={fadeInUp}>
             <h2 className="text-xs uppercase tracking-widest text-[#515154] font-semibold mb-3">Nuestra Filosofía</h2>
             <p className="text-3xl md:text-4xl font-semibold tracking-tight">
               Vida costera, diseño sin concesiones.
             </p>
-          </div>
-          <p className="text-[#515154] font-light leading-relaxed">
+          </motion.div>
+          <motion.p variants={fadeInUp} className="text-[#515154] font-light leading-relaxed">
             Cada residencia de nuestro portafolio es seleccionada por su integridad arquitectónica y su relación con la costa atlántica. Trabajamos exclusivamente con propietarios y compradores que valoran la privacidad, la artesanía y el diseño perdurable por sobre las tendencias pasajeras.
-          </p>
-        </div>
+          </motion.p>
+        </RevealGroup>
       </section>
 
       {/* --- BODY: PROPERTY BENTO GRID --- */}
       <section id="properties" className="py-28 px-6 max-w-7xl mx-auto">
-        <div className="text-center max-w-xl mx-auto mb-20">
+        <Reveal className="text-center max-w-xl mx-auto mb-20">
           <h2 className="text-xs uppercase tracking-widest text-[#515154] font-semibold mb-3">Portafolio</h2>
           <p className="text-3xl md:text-4xl font-semibold tracking-tight">Residencias Costeras Curadas</p>
-        </div>
+        </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[380px]">
+        <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[380px]">
           {properties.map((prop) => (
-            <div
+            <motion.div
               key={prop.id}
+              variants={fadeInUp}
               className={`group relative rounded-none overflow-hidden bg-[#E5E5EA] ${prop.span} flex flex-col justify-end p-8 transition-transform duration-500 hover:-translate-y-1`}
             >
               {/* Background Image */}
@@ -324,9 +388,9 @@ export default function CoastalWebHome() {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </RevealGroup>
       </section>
 
       {/* --- NOSOTROS: ABOUT + SERVICES --- */}
@@ -334,7 +398,7 @@ export default function CoastalWebHome() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
           {/* Left Column: Heading & Text */}
-          <div>
+          <Reveal>
             <h2 className="text-xs uppercase tracking-widest text-[#515154] font-semibold mb-3">Nosotros</h2>
             <p className="text-3xl md:text-5xl font-semibold tracking-tight mb-6">
               Tres décadas de experiencia costera, un enfoque singular.
@@ -342,13 +406,14 @@ export default function CoastalWebHome() {
             <p className="text-[#515154] font-light leading-relaxed">
               Coastal Web nació de la convicción de que una arquitectura excepcional merece un proceso de adquisición igualmente excepcional. Nuestros asesores aportan décadas de experiencia combinada en bienes raíces de lujo, representando un portafolio selecto de las residencias más distinguidas de la costa atlántica.
             </p>
-          </div>
+          </Reveal>
 
           {/* Right Column: Services (3 stacked boxes) */}
-          <div className="space-y-4">
+          <RevealGroup className="space-y-4">
             {services.map((service) => (
-              <div
+              <motion.div
                 key={service.title}
+                variants={fadeInUp}
                 className="flex items-start space-x-5 border border-[#000000]/10 bg-white p-6"
               >
                 <div className="w-12 h-12 shrink-0 bg-[#1D1D1F] text-white flex items-center justify-center">
@@ -358,9 +423,9 @@ export default function CoastalWebHome() {
                   <h3 className="text-lg font-semibold tracking-tight mb-1">{service.title}</h3>
                   <p className="text-sm text-[#515154] font-light leading-relaxed">{service.description}</p>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </RevealGroup>
 
         </div>
       </section>
@@ -370,7 +435,7 @@ export default function CoastalWebHome() {
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
           {/* Left Column: Company Data & Value Prop */}
-          <div>
+          <Reveal>
             <h2 className="text-xs uppercase tracking-widest text-[#515154] font-semibold mb-3">Adquisición Privada</h2>
             <p className="text-3xl md:text-5xl font-semibold tracking-tight mb-6">
               Comenzá tu camino hacia una vida costera excepcional.
@@ -408,10 +473,10 @@ export default function CoastalWebHome() {
                 </div>
               </div>
             </div>
-          </div>
+          </Reveal>
 
           {/* Right Column: Minimalist Contact Form */}
-          <div className="bg-white p-8 md:p-10 rounded-none shadow-sm border border-[#000000]/5">
+          <Reveal delay={0.15} className="bg-white p-8 md:p-10 rounded-none shadow-sm border border-[#000000]/5">
             <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
               <div>
                 <label className="block text-xs uppercase tracking-wider font-semibold text-[#515154] mb-2">Nombre Completo</label>
@@ -457,7 +522,7 @@ export default function CoastalWebHome() {
                 <Send className="w-4 h-4" />
               </button>
             </form>
-          </div>
+          </Reveal>
 
         </div>
       </section>
