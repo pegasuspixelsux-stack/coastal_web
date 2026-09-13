@@ -265,7 +265,7 @@ export default function CoastalWebHome() {
 
             {/* Content Container */}
             <div className="relative max-w-7xl mx-auto h-full px-6 flex flex-col justify-end pb-24 text-white">
-              <div className="max-w-2xl transform transition-all duration-700 translate-y-0">
+              <div className="max-w-2xl transform transition-all duration-700 -translate-y-[10vh]">
                 <div className="flex items-center space-x-2 text-white/80 text-sm font-medium tracking-wide mb-3 uppercase">
                   <MapPin className="w-4 h-4" />
                   <span>{slide.location}</span>
