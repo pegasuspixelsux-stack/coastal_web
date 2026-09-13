@@ -86,10 +86,10 @@ export default async function PropertyDetailPage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* --- EDITORIAL BODY --- */}
-      <main className="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 lg:grid-cols-3 gap-16">
-        {/* Article column */}
-        <article className="lg:col-span-2 space-y-8">
+      {/* --- EDITORIAL BODY (single centered column) --- */}
+      <main className="max-w-[57.6rem] mx-auto px-6 py-20 space-y-16">
+        {/* Article: description first */}
+        <article className="space-y-8">
           {property.editorialStory.length > 0 && (
             <p className={`${fraunces.className} italic text-2xl md:text-3xl leading-snug text-[#1D1D1F]`}>
               {property.editorialStory[0]}
@@ -115,50 +115,48 @@ export default async function PropertyDetailPage({ params }: PageProps) {
           )}
         </article>
 
-        {/* Fact box */}
-        <aside className="lg:sticky lg:top-24 h-fit">
-          <div className="bg-white border border-[#000000]/10 p-8">
-            <p className="text-xs uppercase tracking-widest text-[#515154] font-semibold mb-2">Precio</p>
-            <p className="text-3xl font-semibold tracking-tight font-mono mb-6">{property.price}</p>
+        {/* Price, features, and contact — below the description */}
+        <div className="bg-white border border-[#000000]/10 p-8 md:p-10">
+          <p className="text-xs uppercase tracking-widest text-[#515154] font-semibold mb-2 text-center">Precio</p>
+          <p className="text-3xl font-semibold tracking-tight font-mono mb-8 text-center">{property.price}</p>
 
-            <div className="grid grid-cols-3 gap-4 pb-6 border-b border-[#000000]/10 text-center">
-              <div>
-                <Bed className="w-4 h-4 mx-auto mb-1.5 text-[#86868B]" />
-                <p className="text-sm font-semibold">{property.beds}</p>
-                <p className="text-[10px] uppercase tracking-wider text-[#86868B]">Dorm.</p>
-              </div>
-              <div>
-                <Bath className="w-4 h-4 mx-auto mb-1.5 text-[#86868B]" />
-                <p className="text-sm font-semibold">{property.baths}</p>
-                <p className="text-[10px] uppercase tracking-wider text-[#86868B]">Baños</p>
-              </div>
-              <div>
-                <Maximize className="w-4 h-4 mx-auto mb-1.5 text-[#86868B]" />
-                <p className="text-sm font-semibold">{property.sqm}</p>
-                <p className="text-[10px] uppercase tracking-wider text-[#86868B]">m²</p>
-              </div>
+          <div className="grid grid-cols-3 gap-4 pb-8 border-b border-[#000000]/10 text-center max-w-sm mx-auto">
+            <div>
+              <Bed className="w-4 h-4 mx-auto mb-1.5 text-[#86868B]" />
+              <p className="text-sm font-semibold">{property.beds}</p>
+              <p className="text-[10px] uppercase tracking-wider text-[#86868B]">Dorm.</p>
             </div>
-
-            <div className="pt-6 space-y-3">
-              <a
-                href={mailtoLink}
-                className="w-full inline-flex items-center justify-center space-x-2 bg-[#1D1D1F] text-white px-6 py-3.5 text-sm font-medium hover:bg-[#333336] transition-all"
-              >
-                <Mail className="w-4 h-4" />
-                <span>Consultar por Email</span>
-              </a>
-              <a
-                href={whatsappLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center space-x-2 bg-[#25D366] text-white px-6 py-3.5 text-sm font-medium hover:bg-[#22bf5b] transition-all"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>Chatear por WhatsApp</span>
-              </a>
+            <div>
+              <Bath className="w-4 h-4 mx-auto mb-1.5 text-[#86868B]" />
+              <p className="text-sm font-semibold">{property.baths}</p>
+              <p className="text-[10px] uppercase tracking-wider text-[#86868B]">Baños</p>
+            </div>
+            <div>
+              <Maximize className="w-4 h-4 mx-auto mb-1.5 text-[#86868B]" />
+              <p className="text-sm font-semibold">{property.sqm}</p>
+              <p className="text-[10px] uppercase tracking-wider text-[#86868B]">m²</p>
             </div>
           </div>
-        </aside>
+
+          <div className="pt-8 flex flex-col sm:flex-row gap-3 max-w-sm mx-auto">
+            <a
+              href={mailtoLink}
+              className="w-full inline-flex items-center justify-center space-x-2 bg-[#1D1D1F] text-white px-6 py-3.5 text-sm font-medium hover:bg-[#333336] transition-all"
+            >
+              <Mail className="w-4 h-4" />
+              <span>Email</span>
+            </a>
+            <a
+              href={whatsappLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full inline-flex items-center justify-center space-x-2 bg-[#25D366] text-white px-6 py-3.5 text-sm font-medium hover:bg-[#22bf5b] transition-all"
+            >
+              <MessageCircle className="w-4 h-4" />
+              <span>WhatsApp</span>
+            </a>
+          </div>
+        </div>
       </main>
 
       {/* --- RELATED PROPERTIES --- */}
