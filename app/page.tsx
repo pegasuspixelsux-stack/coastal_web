@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { motion, useInView, useReducedMotion, type Variants } from 'framer-motion';
 import {
   ChevronLeft,
@@ -574,9 +575,14 @@ export default function CoastalWebHome() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-xs text-white/40 font-light">
+        <div className="max-w-7xl mx-auto pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between text-xs text-white/40 font-light gap-4">
           <p>&copy; {new Date().getFullYear()} Coastal Web Estate Inc. Todos los derechos reservados.</p>
-          <p className="mt-4 md:mt-0">Diseñado con una atención al detalle de nivel Apple.</p>
+          <div className="flex items-center gap-6">
+            <p>Diseñado con una atención al detalle de nivel Apple.</p>
+            <Link href="/login" className="hover:text-white transition-colors">
+              Acceso Administrativo
+            </Link>
+          </div>
         </div>
       </footer>
 
