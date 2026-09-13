@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -11,6 +11,8 @@ import {
   Users,
   LogOut,
   Loader2,
+  Menu,
+  X,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth-context';
 
@@ -25,6 +27,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const { user, loading, signOut } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Close the mobile drawer whenever the route changes. Adjusting state
+  // during render (rather than in an effect) is the pattern React itself
+  // recommends for "reset state when a prop changes" — see
+  // https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setSidebarOpen(false);
+  }
 
   // TODO(Firebase): once onAuthStateChanged drives `user`/`loading` above,
   // this guard works unchanged.
@@ -44,12 +57,33 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     exact ? pathname === href : pathname.startsWith(href);
 
   return (
-    <div className="min-h-screen bg-[#FBFBFD] text-[#1D1D1F] font-sans antialiased flex">
-      {/* --- SIDEBAR --- */}
-      <aside className="w-64 shrink-0 h-screen sticky top-0 border-r border-[#000000]/10 bg-white/70 backdrop-blur-xl flex flex-col">
-        <div className="h-16 flex items-center px-6 border-b border-[#000000]/10">
-          <span className="font-semibold text-lg tracking-tight">Coastal.</span>
-          <span className="ml-2 text-[10px] uppercase tracking-widest text-[#86868B] font-semibold">Admin</span>
+    <div className="min-h-screen bg-[#FBFBFD] text-[#1D1D1F] font-sans antialiased lg:flex">
+      {/* --- MOBILE BACKDROP --- */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
+        />
+      )}
+
+      {/* --- SIDEBAR (fixed drawer on mobile, static column on lg+) --- */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 w-64 h-screen border-r border-[#000000]/10 bg-white/90 backdrop-blur-xl flex flex-col transform transition-transform duration-300 ease-out ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } lg:translate-x-0 lg:static lg:sticky lg:top-0 lg:z-auto lg:shrink-0`}
+      >
+        <div className="h-16 flex items-center justify-between px-6 border-b border-[#000000]/10">
+          <div>
+            <span className="font-semibold text-lg tracking-tight">Coastal.</span>
+            <span className="ml-2 text-[10px] uppercase tracking-widest text-[#86868B] font-semibold">Admin</span>
+          </div>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden text-[#86868B] hover:text-[#1D1D1F] transition-colors"
+            aria-label="Cerrar menú"
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
         <nav className="flex-1 px-3 py-6 space-y-1">
@@ -93,10 +127,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       {/* --- MAIN COLUMN --- */}
       <div className="flex-1 min-w-0">
-        <header className="h-16 sticky top-0 z-30 flex items-center justify-between px-8 border-b border-[#000000]/10 bg-[#FBFBFD]/80 backdrop-blur-xl">
-          <div />
+        <header className="h-16 sticky top-0 z-30 flex items-center justify-between px-4 sm:px-8 border-b border-[#000000]/10 bg-[#FBFBFD]/80 backdrop-blur-xl">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="lg:hidden text-[#1D1D1F]"
+            aria-label="Abrir menú"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+          <div className="hidden lg:block" />
           <div className="flex items-center space-x-3">
-            <div className="text-right">
+            <div className="text-right hidden sm:block">
               <p className="text-sm font-medium leading-tight">{user.name}</p>
               <p className="text-xs text-[#86868B] leading-tight">{user.email}</p>
             </div>
@@ -106,7 +147,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           </div>
         </header>
 
-        <main className="p-8">{children}</main>
+        <main className="p-4 sm:p-6 lg:p-8">{children}</main>
       </div>
     </div>
   );
