@@ -43,6 +43,7 @@ export default function PropertiesPage() {
       const newProperty: Property = {
         id: String(nextId++),
         ...data,
+        listingType: 'Venta',
         images: [data.image],
         editorialStory: [],
         status: 'Publicada',

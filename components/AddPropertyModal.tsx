@@ -136,7 +136,7 @@ export default function AddPropertyModal({ isOpen, onClose, onSubmit, initialDat
                       required
                       value={formData.price}
                       onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                      placeholder="$10.000.000"
+                      placeholder="US$10.000.000"
                       className="w-full bg-[#FBFBFD] border border-[#000000]/10 rounded-none px-4 py-3 text-sm focus:outline-none focus:border-[#1D1D1F] transition-colors"
                     />
                   </div>
