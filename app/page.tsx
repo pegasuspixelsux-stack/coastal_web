@@ -12,6 +12,9 @@ import {
   Mail,
   Phone,
   Send,
+  Key,
+  ShieldCheck,
+  Users,
 } from 'lucide-react';
 
 // --- HERO SLIDES DATA ---
@@ -50,6 +53,25 @@ const heroSlides = [
     location: "Monterey, California",
     tagline: "Minimalist living shaped by coastal winds.",
     image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2000&auto=format&fit=crop",
+  },
+];
+
+// --- OUR SERVICES (Nosotros section) ---
+const services = [
+  {
+    icon: Key,
+    title: "Property Acquisition",
+    description: "Off-market access to architecturally significant residences along the Pacific coastline.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Private Advisory",
+    description: "Discreet, end-to-end guidance through valuation, negotiation, and closing.",
+  },
+  {
+    icon: Users,
+    title: "Concierge Services",
+    description: "Dedicated support for relocation, staging, and ongoing property management.",
   },
 ];
 
@@ -304,6 +326,42 @@ export default function CoastalWebHome() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* --- NOSOTROS: ABOUT + SERVICES --- */}
+      <section id="vision" className="py-28 px-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
+          {/* Left Column: Heading & Text */}
+          <div>
+            <h2 className="text-xs uppercase tracking-widest text-[#515154] font-semibold mb-3">Nosotros</h2>
+            <p className="text-3xl md:text-5xl font-semibold tracking-tight mb-6">
+              Three decades of coastal expertise, one singular focus.
+            </p>
+            <p className="text-[#515154] font-light leading-relaxed">
+              Coastal Web was founded on the belief that exceptional architecture deserves an equally exceptional acquisition process. Our advisors bring decades of combined experience in luxury real estate, representing a select portfolio of the Pacific coastline's most distinguished residences.
+            </p>
+          </div>
+
+          {/* Right Column: Services (3 stacked boxes) */}
+          <div className="space-y-4">
+            {services.map((service) => (
+              <div
+                key={service.title}
+                className="flex items-start space-x-5 border border-[#000000]/10 bg-white p-6"
+              >
+                <div className="w-12 h-12 shrink-0 bg-[#1D1D1F] text-white flex items-center justify-center">
+                  <service.icon className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold tracking-tight mb-1">{service.title}</h3>
+                  <p className="text-sm text-[#515154] font-light leading-relaxed">{service.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
         </div>
       </section>
 
